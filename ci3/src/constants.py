@@ -1,0 +1,2 @@
+
+MINIMUM_KEEP_COUNT = 1

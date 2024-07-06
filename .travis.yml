@@ -1,0 +1,19 @@
+language: python
+python:
+  - '3.10'
+
+services:
+  - docker
+
+jobs:
+  include:
+    - stage: build
+      script:
+        - docker build -t jahosimafiah/ci3:latest .
+        - docker tag jahosimafiah/ci3:latest jahosimafiah/ci3:${TRAVIS_COMMIT}
+        - docker login -u jahosimafiah -p <docker-password>
+        - docker push --all-tags jahosimafiah/ci3
+    - stage: test
+      script:
+        - pip install -r tests/requirements.txt
+        - pytest -v --cov=ci3
